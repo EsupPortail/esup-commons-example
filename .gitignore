@@ -1,1 +1,9 @@
+*~
 /.project
+/.settings
+**/target
+**/.settings
+**/.classpath
+**/.project
+**/exampleDatabase.*
+**/exampleData.*
