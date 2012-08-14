@@ -116,6 +116,10 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	@Override
 	public Version getDatabaseVersion() {
 		VersionManager versionManager = daoService.getVersionManager();
+		if (versionManager == null) {
+			//database is not initialized return null to checkVersion()
+			return null;
+		}
 		Version version = new Version(versionManager.getVersion());
 		return version;
 	}
