@@ -7,8 +7,11 @@ package org.esupportail.example.domain;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.jws.WebMethod;
 import javax.jws.WebService;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -49,12 +52,23 @@ public interface DomainService extends Serializable {
 	 * Delete an user.
 	 * @param user
 	 */
-	void deleteUser(User user);
+	void deleteUser(@PathParam("id") User user);
+
+	/**
+	 * Delete an user.
+	 * @param userID
+	 */
+	@DELETE
+	@Path("/users/{id}")
+	@WebMethod(operationName = "deleteUserById")
+	void deleteUser(@PathParam("id") String id);
 
 	/**
 	 * Add an user.
 	 * @param user
 	 */
+	@PUT
+	@Path("/users")
 	void addUser(User user);
 
 	/**

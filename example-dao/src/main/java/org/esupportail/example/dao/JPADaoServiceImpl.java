@@ -92,12 +92,6 @@ public class JPADaoServiceImpl extends AbstractGenericJPADaoService implements D
 	 * @see org.esupportail.example.dao.DaoService#addUser(org.esupportail.example.domain.beans.User)
 	 */
 	public void addUser(final User user) {
-		List<Information> informations = new ArrayList<Information>();
-		Information information = new Information();
-		information.setInformationKey("INSERT_DATE");
-		information.setInformationValue(getDateTime());
-		informations.add(information);
-		user.setInformations(informations);
 		entityManager.persist(user);
 	}
 
@@ -113,25 +107,10 @@ public class JPADaoServiceImpl extends AbstractGenericJPADaoService implements D
 	 * @see org.esupportail.example.dao.DaoService#updateUser(org.esupportail.example.domain.beans.User)
 	 */
 	public void updateUser(final User user) {
-		List<Information> informations = user.getInformations();
-		if (informations == null) {
-			informations = new ArrayList<Information>();
-		}
-		Information information = new Information();
-		information.setInformationKey("UPDATE_DATE");
-		information.setInformationValue(getDateTime());
-		informations.add(information);
-		user.setInformations(informations);
 		entityManager.merge(user);
 	}
 
 	
-	private String getDateTime() {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        Date date = new Date();
-        return dateFormat.format(date);
-    }
-
 	//////////////////////////////////////////////////////////////
 	// version
 	//////////////////////////////////////////////////////////////

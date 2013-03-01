@@ -4,7 +4,15 @@
  */
 package org.esupportail.example.domain;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import javax.ws.rs.DELETE;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 
 import org.esupportail.commons.exceptions.ConfigException;
 import org.esupportail.commons.exceptions.UserNotFoundException;
@@ -13,6 +21,7 @@ import org.esupportail.commons.services.logging.Logger;
 import org.esupportail.commons.services.logging.LoggerImpl;
 import org.esupportail.commons.utils.Assert;
 import org.esupportail.example.dao.DaoService;
+import org.esupportail.example.domain.beans.Information;
 import org.esupportail.example.domain.beans.User;
 import org.esupportail.example.domain.beans.VersionManager;
 import org.springframework.beans.factory.InitializingBean;
@@ -89,6 +98,12 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 		daoService.deleteUser(user);
 	}
 
+	@Override
+	public void deleteUser(String id) {
+		User user = daoService.getUser(id);
+		daoService.deleteUser(user);
+	}
+
 	/**
 	 * @see org.esupportail.example.domain.DomainService#addUser(org.esupportail.example.domain.beans.User)
 	 */
@@ -97,14 +112,38 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 		User tmp = daoService.getUser(user.getId());
 		if (tmp == null) { 
 			// user does not already exists in database
+			Information information = new Information();
+			information.setInformationKey("INSERT_DATE");
+			information.setInformationValue(getDateTime());
+			List<Information> informations = user.getInformations();
+			if (informations == null) {
+				informations = new ArrayList<Information>();
+			} 
+			informations.add(information);
+			user.setInformations(informations);
 			daoService.addUser(user);			
 		}
 		else {
-			user.setInformations(tmp.getInformations());
+			Information information = new Information();
+			information.setInformationKey("UPDATE_DATE");
+			information.setInformationValue(getDateTime());
+			List<Information> informations = user.getInformations();
+			if (informations == null) {
+				informations = new ArrayList<Information>();
+			} 
+			informations.addAll(tmp.getInformations());
+			informations.add(information);
+			user.setInformations(informations);
 			daoService.updateUser(user);
 		}
 		
 	}
+
+	private String getDateTime() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
 
 	//////////////////////////////////////////////////////////////
 	// Version
