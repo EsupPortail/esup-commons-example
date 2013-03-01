@@ -78,7 +78,7 @@ public class ExceptionController extends
 
 	@Override
 	public String restart() {
-		Map<String, Object> resettables = BeanUtils
+		Map<String, Resettable> resettables = BeanUtils
 				.getBeansOfClass(Resettable.class);
 		for (String name : resettables.keySet()) {
 			if (logger.isDebugEnabled()) {
