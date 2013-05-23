@@ -1,16 +1,14 @@
 <?xml version="1.0"?>
-<project
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<artifactId>esup-example</artifactId>
 		<groupId>org.esupportail</groupId>
-		<version>1.0-SNAPSHOT</version>
+		<version>1.0.0</version>
 	</parent>
 	<groupId>org.esupportail</groupId>
 	<artifactId>example-web-jsf-servlet</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>war</packaging>
 	<name>example-web-jsf-servlet</name>
 	<url>http://maven.apache.org</url>
@@ -48,19 +46,18 @@
 						<phase>package</phase>
 						<configuration>
 							<tasks>
-								 <delete dir="${basedir}/target/serverzip/"/>
-								 <delete dir="${basedir}/target/installer/"/>
-								 <delete dir="${basedir}/target/exe/"/>
-								 <delete file="${basedir}/target/${project.build.finalName}-server.zip"/>
-								 <delete file="${basedir}/target/${project.build.finalName}-quickstart.jar"/>
-								 <delete file="${basedir}/target/${project.build.finalName}-quickstart.exe"/>
+								 <delete dir="${basedir}/target/serverzip/" />
+								 <delete dir="${basedir}/target/installer/" />
+								 <delete dir="${basedir}/target/exe/" />
+								 <delete file="${basedir}/target/${project.build.finalName}-server.zip" />
+								 <delete file="${basedir}/target/${project.build.finalName}-quickstart.jar" />
+								 <delete file="${basedir}/target/${project.build.finalName}-quickstart.exe" />
 								<copy todir="${basedir}/target/serverzip/data">
 									<fileset dir="${basedir}/src/main/datarelease/">
 										<include name="**/*" />
 									</fileset>
 								</copy>
-								<copy file="${basedir}/target/${project.build.finalName}.war"
-									tofile="${basedir}/target/serverzip/example-web-jsf-servlet.war" />
+								<copy file="${basedir}/target/${project.build.finalName}.war" tofile="${basedir}/target/serverzip/example-web-jsf-servlet.war" />
 
 								<copy todir="${basedir}/target/installer/data">
 									<fileset dir="${basedir}/src/main/datarelease/">
@@ -72,25 +69,19 @@
 										<include name="**/*" />
 									</fileset>
 								</copy>
-								<copy file="${basedir}/target/${project.build.finalName}.war"
-									tofile="${basedir}/target/installer/example-web-jsf-servlet.war" />
+								<copy file="${basedir}/target/${project.build.finalName}.war" tofile="${basedir}/target/installer/example-web-jsf-servlet.war" />
 								<copy todir="${basedir}/target/installer">
 									<fileset dir="${basedir}/src/main/izpack/config/jar/">
 										<include name="**/*" />
 									</fileset>
 								</copy>
-								<unzip
-									src="${basedir}/src/main/util/utils/tomcat/apache-tomcat-6.0.29.zip"
+								<unzip src="${basedir}/src/main/util/utils/tomcat/apache-tomcat-6.0.29.zip"
 									dest="${basedir}/target/installer" />
-								<copy
-									file="${basedir}/target/installer/apache-tomcat-6.0.29/bin/tomcat6w.exe"
+								<copy file="${basedir}/target/installer/apache-tomcat-6.0.29/bin/tomcat6w.exe"
 									tofile="${basedir}/target/installer/apache-tomcat-6.0.29/bin/Tomcat${izpack.application.name}w.exe" />
-								<replace file="${basedir}/target/installer/install.xml"
-									token="@@@app.dist.name@@@" value="${izpack.application.name}" />
-								<replace file="${basedir}/target/installer/shortcutSpec.xml"
-									token="@@@app.dist.name@@@" value="${izpack.application.name}" />
-								<replace file="${basedir}/target/installer/targetPanelDirWindows.txt"
-									token="@@@app.dist.name@@@" value="${izpack.application.name}" />
+								<replace file="${basedir}/target/installer/install.xml" token="@@@app.dist.name@@@" value="${izpack.application.name}" />
+								<replace file="${basedir}/target/installer/shortcutSpec.xml" token="@@@app.dist.name@@@" value="${izpack.application.name}" />
+								<replace file="${basedir}/target/installer/targetPanelDirWindows.txt" token="@@@app.dist.name@@@" value="${izpack.application.name}" />
 
 							</tasks>
 						</configuration>
@@ -104,8 +95,7 @@
 						<configuration>
 							<tasks>
 								<copy todir="${basedir}/target/exe" overwrite="yes">
-									<fileset
-										file="${basedir}/target/${project.build.finalName}-quickstart.jar" />
+									<fileset file="${basedir}/target/${project.build.finalName}-quickstart.jar" />
 								</copy>
 
 								<copy todir="${basedir}/target/exe" overwrite="yes">
@@ -114,11 +104,9 @@
 									</fileset>
 								</copy>
 
-								<replace file="${basedir}/target/exe/launcher.ini"
-									token="@@@app.dist@@@" value="${project.build.finalName}" />
+								<replace file="${basedir}/target/exe/launcher.ini" token="@@@app.dist@@@" value="${project.build.finalName}" />
 
-								<exec executable="${zip.location}"
-									dir="${basedir}/target/exe" failonerror="true"
+								<exec executable="${zip.location}" dir="${basedir}/target/exe" failonerror="true"
 									resolveExecutable="true">
 									<arg value="a" />
 									<arg value="-mx=0" />
@@ -126,25 +114,23 @@
 									<arg value="*" />
 								</exec>
 
-								<concat
-									destfile="${basedir}/target/${project.build.finalName}-quickstart.exe"
+								<concat destfile="${basedir}/target/${project.build.finalName}-quickstart.exe"
 									binary="true">
 									<fileset file="${basedir}/src/main/izpack/config/exe/7zS.sfx" />
 									<fileset file="${basedir}/src/main/izpack/config/exe/config.txt" />
 									<fileset file="${basedir}/target/exe/files.7z" />
 								</concat>
 
-								<exec executable="${basedir}/src/main/util/utils/7zip/7za.exe"
-									dir="${basedir}/target/serverzip" failonerror="true"
+								<exec executable="${basedir}/src/main/util/utils/7zip/7za.exe" dir="${basedir}/target/serverzip" failonerror="true"
 									resolveExecutable="true">
 									<arg value="a" />
 									<arg value="-mx=0" />
 									<arg value="${basedir}/target/${project.build.finalName}-server.zip" />
 									<arg value="*" />
 								</exec>
-								 <delete dir="${basedir}/target/serverzip/"/>
-								 <delete dir="${basedir}/target/installer/"/>
-								 <delete dir="${basedir}/target/exe/"/>
+								 <delete dir="${basedir}/target/serverzip/" />
+								 <delete dir="${basedir}/target/installer/" />
+								 <delete dir="${basedir}/target/exe/" />
 							</tasks>
 						</configuration>
 						<goals>
@@ -195,7 +181,7 @@
 		<dependency>
 			<groupId>org.esupportail</groupId>
 			<artifactId>example-web-jsf-shared</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>1.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.primefaces</groupId>
