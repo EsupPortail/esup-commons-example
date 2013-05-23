@@ -4,11 +4,11 @@
 	<parent>
 		<artifactId>esup-example</artifactId>
 		<groupId>org.esupportail</groupId>
-		<version>1.0.0</version>
+		<version>2.0.0-SNAPSHOT</version>
 	</parent>
 	<groupId>org.esupportail</groupId>
 	<artifactId>example-web-jsf-servlet</artifactId>
-	<version>1.0.0</version>
+	<version>2.0.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>example-web-jsf-servlet</name>
 	<url>http://maven.apache.org</url>
@@ -75,10 +75,8 @@
 										<include name="**/*" />
 									</fileset>
 								</copy>
-								<unzip src="${basedir}/src/main/util/utils/tomcat/apache-tomcat-6.0.29.zip"
-									dest="${basedir}/target/installer" />
-								<copy file="${basedir}/target/installer/apache-tomcat-6.0.29/bin/tomcat6w.exe"
-									tofile="${basedir}/target/installer/apache-tomcat-6.0.29/bin/Tomcat${izpack.application.name}w.exe" />
+								<unzip src="${basedir}/src/main/util/utils/tomcat/apache-tomcat-6.0.29.zip" dest="${basedir}/target/installer" />
+								<copy file="${basedir}/target/installer/apache-tomcat-6.0.29/bin/tomcat6w.exe" tofile="${basedir}/target/installer/apache-tomcat-6.0.29/bin/Tomcat${izpack.application.name}w.exe" />
 								<replace file="${basedir}/target/installer/install.xml" token="@@@app.dist.name@@@" value="${izpack.application.name}" />
 								<replace file="${basedir}/target/installer/shortcutSpec.xml" token="@@@app.dist.name@@@" value="${izpack.application.name}" />
 								<replace file="${basedir}/target/installer/targetPanelDirWindows.txt" token="@@@app.dist.name@@@" value="${izpack.application.name}" />
@@ -106,23 +104,20 @@
 
 								<replace file="${basedir}/target/exe/launcher.ini" token="@@@app.dist@@@" value="${project.build.finalName}" />
 
-								<exec executable="${zip.location}" dir="${basedir}/target/exe" failonerror="true"
-									resolveExecutable="true">
+								<exec executable="${zip.location}" dir="${basedir}/target/exe" failonerror="true" resolveExecutable="true">
 									<arg value="a" />
 									<arg value="-mx=0" />
 									<arg value="files.7z" />
 									<arg value="*" />
 								</exec>
 
-								<concat destfile="${basedir}/target/${project.build.finalName}-quickstart.exe"
-									binary="true">
+								<concat destfile="${basedir}/target/${project.build.finalName}-quickstart.exe" binary="true">
 									<fileset file="${basedir}/src/main/izpack/config/exe/7zS.sfx" />
 									<fileset file="${basedir}/src/main/izpack/config/exe/config.txt" />
 									<fileset file="${basedir}/target/exe/files.7z" />
 								</concat>
 
-								<exec executable="${basedir}/src/main/util/utils/7zip/7za.exe" dir="${basedir}/target/serverzip" failonerror="true"
-									resolveExecutable="true">
+								<exec executable="${basedir}/src/main/util/utils/7zip/7za.exe" dir="${basedir}/target/serverzip" failonerror="true" resolveExecutable="true">
 									<arg value="a" />
 									<arg value="-mx=0" />
 									<arg value="${basedir}/target/${project.build.finalName}-server.zip" />
@@ -181,7 +176,7 @@
 		<dependency>
 			<groupId>org.esupportail</groupId>
 			<artifactId>example-web-jsf-shared</artifactId>
-			<version>1.0.0</version>
+			<version>2.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.primefaces</groupId>

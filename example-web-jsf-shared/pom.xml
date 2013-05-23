@@ -4,7 +4,7 @@
   <parent>
     <artifactId>esup-example</artifactId>
     <groupId>org.esupportail</groupId>
-    <version>1.0.0</version>
+    <version>2.0.0-SNAPSHOT</version>
   </parent>
   <artifactId>example-web-jsf-shared</artifactId>
   <name>example-web-jsf-shared</name>
@@ -18,7 +18,7 @@
 		<dependency>
 			<groupId>org.esupportail</groupId>
 			<artifactId>example-domain-services</artifactId>
-			<version>1.0.0</version>
+			<version>2.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.esupportail</groupId>
