@@ -7,7 +7,10 @@ import org.esupportail.example.domain.beans.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional(propagation=Propagation.SUPPORTS, readOnly=true)
 public class UserServiceImpl implements UserService {
 
 	/**
@@ -19,16 +22,19 @@ public class UserServiceImpl implements UserService {
 	private UserRepository repository;
 	
 	@Override
+	@Transactional(propagation=Propagation.REQUIRED, readOnly=false)
 	public User add(final User user) {
 		return repository.save(user);
 	}
 
 	@Override
+	@Transactional(propagation=Propagation.REQUIRED, readOnly=false)
 	public User update(final User user) {
 		return repository.save(user);
 	}
 
 	@Override
+	@Transactional(propagation=Propagation.REQUIRED, readOnly=false)
 	public void delete(final User user) {
 		repository.delete(user);
 	}

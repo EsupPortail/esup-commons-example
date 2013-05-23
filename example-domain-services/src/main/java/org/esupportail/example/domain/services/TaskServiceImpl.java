@@ -10,11 +10,14 @@ import org.esupportail.example.domain.beans.Task;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author llevague
  *
  */
+@Transactional(propagation=Propagation.SUPPORTS, readOnly=true)
 public class TaskServiceImpl implements TaskService {
 
 	/**
@@ -26,16 +29,19 @@ public class TaskServiceImpl implements TaskService {
 	private TaskRepository repository;
 
 	@Override
+	@Transactional(propagation=Propagation.REQUIRED, readOnly=false)
 	public Task add(final Task task) {
 		return repository.save(task);
 	}
 
 	@Override
+	@Transactional(propagation=Propagation.REQUIRED, readOnly=false)
 	public Task update(final Task task) {
 		return repository.save(task);
 	}
 
 	@Override
+	@Transactional(propagation=Propagation.REQUIRED, readOnly=false)
 	public void delete(final Task task) {
 		repository.delete(task);
 	}
