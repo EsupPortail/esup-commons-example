@@ -60,7 +60,7 @@
 		</snapshotRepository>
 	</distributionManagement>
     <scm>
-        <developerConnection>scm:git:ssh://git@github.com:EsupPortail/esup-commons-example</developerConnection>
+        <developerConnection>scm:git:ssh://git@github.com/EsupPortail/esup-commons-example</developerConnection>
     </scm>
 	<build>
 		<defaultGoal>install</defaultGoal>
