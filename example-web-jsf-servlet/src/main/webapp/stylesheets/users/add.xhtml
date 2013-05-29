@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    template="/stylesheets/template.xhtml">
+    <ui:define name="content">
+        <h:form styleClass="form-horizontal">
+            <div class="panel">
+                <div class="panel-heading">
+                    Ajouter un utilisateur
+                    <ul class="inline pull-right">
+                        <li>
+                            <p:commandLink action="#{userController.addUser}" styleClass="btn btn-small btn-success" title="Valider" rel="tooltip">
+                                <i class="icon-ok"/>
+                            </p:commandLink>
+                        </li>
+                        <li>
+                            <p:commandLink action="#{userController.goList}" immediate="true" styleClass="btn btn-small" title="Annuler" rel="tooltip">
+                                <i class="icon-remove"/>
+                            </p:commandLink>
+                        </li>
+                    </ul>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="span6">
+                            <div class="control-group">
+                                <p:outputLabel value="ID" for="inputID" styleClass="control-label"/>
+                                <div class="controls">
+                                    <p:inputText id="inputID" value="#{userController.newUser.id}" required="true" maxlength="45" />
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <p:outputLabel value="Nom" for="inputDisplayName" styleClass="control-label"/>
+                                <div class="controls">
+                                    <p:inputText id="inputDisplayName" value="#{userController.newUser.displayName}" required="true" maxlength="45" />
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <p:outputLabel value="Langue" for="inputLanguage" styleClass="control-label"/>
+                                <div class="controls">
+                                    <p:selectOneMenu id="inputLanguage" value="#{userController.newUser.language}" required="true">
+                                        <f:selectItem itemValue="fr" itemLabel="Français" />
+                                        <f:selectItem itemValue="en" itemLabel="Anglais" />
+                                    </p:selectOneMenu>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="span6">
+                            <div class="control-group">
+                                <p:outputLabel value="Email" for="inputEmail" styleClass="control-label"/>
+                                <div class="controls">
+                                    <p:inputText id="inputEmail" value="#{userController.newUser.email}" required="true" maxlength="80" />
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <p:outputLabel value="Admin?" for="inputAdmin" styleClass="control-label"/>
+                                <div class="controls">
+                                    <p:selectBooleanCheckbox id="inputAdmin" value="#{userController.newUser.admin}" style="padding-top: 5px;" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
+

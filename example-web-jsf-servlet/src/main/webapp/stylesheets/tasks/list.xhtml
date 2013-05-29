@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    template="/stylesheets/template.xhtml">
+    <ui:define name="content">
+        <h:form id="tasksForm">
+            <div class="panel">
+                <div class="panel-heading">
+                    Tâches
+                    <p:outputPanel id="actions" layout="block" styleClass="pull-right">
+                        <ul class="inline">
+                            <li>
+                                <p:commandLink action="#{taskController.addMockTask}" immediate="true" styleClass="btn btn-small btn-primary" title="Ajouter une tâche bidon" rel="tooltip">
+                                    <i class="icon-rocket"/>
+                                </p:commandLink>
+                            </li>
+                            <li>
+                                <p:commandLink action="#{taskController.goAdd}" immediate="true" styleClass="btn btn-small btn-success" title="Ajouter une tâche" rel="tooltip">
+                                    <i class="icon-plus"/>
+                                </p:commandLink>
+                            </li>
+                            <ui:fragment rendered="#{not empty taskController.tasksLDM}">
+                                <li>
+                                    <p:commandLink
+                                        action="#{taskController.deleteTasks}"
+                                        styleClass="btn btn-small btn-danger"
+                                        title="Supprimer les tâches sélectionnées"
+                                        rel="tooltip">
+                                        <i class="icon-trash" />
+                                    </p:commandLink>
+                                </li>
+                            </ui:fragment>
+                        </ul>
+                    </p:outputPanel>
+                </div>
+                <p:dataTable id="tasksList" 
+                    value="#{taskController.tasksLDM}" rows="10"
+                    rowsPerPageTemplate="1,2,3,4,5,6,7,8,9,10"
+                    var="task" paginator="true" lazy="true"
+                    editable="true" sortBy="#{task.title}"
+                    selection="#{taskController.selectedTasks}">
+
+                    <p:ajax event="rowEdit"
+                        listener="#{taskController.onEdit}" />
+
+                    <p:column selectionMode="multiple"
+                        style="width: 18px!important; text-align: center;" />
+                    <p:column headerText="ID" sortBy="#{task.id}">
+                        <h:outputText value="#{task.id}"
+                            title="#{task.id}" />
+                    </p:column>
+                    <p:column headerText="Titre" sortBy="#{task.title}">
+                        <h:outputText value="#{task.title}"
+                            title="#{task.title}" />
+                    </p:column>
+                    <p:column headerText="Description"
+                        sortBy="#{task.description}">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText
+                                    value="#{task.description}"
+                                    title="#{task.description}" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{task.description}"
+                                    required="true" maxlength="45" />
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="Date" sortBy="#{task.date}">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{task.date}">
+                                    <f:convertDateTime
+                                        pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:calendar value="#{task.date}"
+                                    pattern="dd/MM/yyyy" required="true" />
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="Assignée à"
+                        sortBy="#{task.assignee.displayName}">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText
+                                    title="#{task.assignee.displayName}"
+                                    value="#{task.assignee.displayName}" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:selectOneMenu value="#{task.assignee}" converter="#{userConverter}">
+                                    <f:selectItem itemValue="" itemLabel="" />
+                                    <f:selectItems value="#{taskController.users}" var="u" itemValue="#{u}" itemLabel="#{u.displayName} (#{u.id})" />
+                                </h:selectOneMenu>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="Publique?"
+                        sortBy="#{task.publicTask}"
+                        style="width:18px!important; text-align:center;">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <p:outputPanel styleClass="icon-check"
+                                    rendered="#{task.publicTask}" />
+                                <p:outputPanel
+                                    styleClass="icon-check-empty"
+                                    rendered="#{not task.publicTask}" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:selectBooleanCheckbox
+                                    value="#{task.publicTask}"
+                                    style="padding-top: 5px;" />
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column
+                        style="width:18px!important; text-align:center;">
+                        <p:rowEditor />
+                    </p:column>
+                </p:dataTable>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
+

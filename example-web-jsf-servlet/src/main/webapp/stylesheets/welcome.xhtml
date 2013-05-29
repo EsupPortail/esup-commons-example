@@ -1,17 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:t="http://myfaces.apache.org/tomahawk"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.prime.com.tr/ui"
-	xmlns:e="http://commons.esup-portail.org"
-	template="/stylesheets/template.xhtml">
-	<ui:define name="content">
-		<e:section value="#{msgs['CAS_DEMO.TITLE']}" />
-		<h:outputText
-			value="#{msgs['CURRENT.USER']} #{welcomeController.currentUserId}" />
-	</ui:define>
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    template="/stylesheets/template.xhtml">
+    <ui:define name="content">
+        <h:form>
+            <div class="panel">
+                <div class="panel-heading">Tâches publiques</div>
+                <p:dataTable id="tasksList"
+                    value="#{taskController.publicTasksLDM}" rows="10"
+                    rowsPerPageTemplate="1,2,3,4,5,6,7,8,9,10"
+                    var="task" paginator="true" lazy="true">
+                    
+                    <p:column headerText="Titre">
+                        <h:outputText value="#{task.title}"
+                                title="#{task.title}" />
+                    </p:column>
+                    <p:column headerText="Description">
+                        <h:outputText value="#{task.description}"
+                                title="#{task.description}" />                        
+                    </p:column>
+                    <p:column headerText="Propriétaire">
+                        <h:outputText value="#{task.owner.displayName}"
+                                title="#{task.owner.displayName}" />                        
+                    </p:column>
+                    <p:column headerText="Assignée à">
+                        <h:outputText value="#{task.assignee.displayName}"
+                                title="#{task.assignee.displayName}" />                        
+                    </p:column>
+                    <p:column headerText="Date">
+                        <h:outputText value="#{task.date}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                    </p:column>
+                </p:dataTable>
+            </div>
+            
+            <p:socket channel="/tasks">
+                <p:ajax event="message" update="tasksList" />
+            </p:socket>
+        </h:form>
+    </ui:define>
 </ui:composition>
 

@@ -43,6 +43,39 @@ public class Task implements Serializable {
 	@ManyToOne
 	private User owner;
 	
+	@ManyToOne(optional=true)
+	private User assignee;
+	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Task other = (Task) obj;
+		if (id == null) {
+			if (other.id != null) {
+				return false;
+			}
+		} else if (!id.equals(other.id)) {
+			return false;
+		}
+		return true;
+	}
 
 	/**
 	 * @return the id
@@ -180,4 +213,27 @@ public class Task implements Serializable {
 		this.owner = owner;
 		return this;
 	}
+
+	/**
+	 * @return the assignee
+	 */
+	public User getAssignee() {
+		return assignee;
+	}
+
+	/**
+	 * @param assignee the assignee to set
+	 */
+	public void setAssignee(User assignee) {
+		this.assignee = assignee;
+	}
+
+	/**
+	 * @param assignee the assignee to set
+	 */
+	public Task withAssignee(User assignee) {
+		this.assignee = assignee;
+		return this;
+	}
+	
 }

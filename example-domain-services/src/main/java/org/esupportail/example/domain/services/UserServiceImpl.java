@@ -1,5 +1,7 @@
 package org.esupportail.example.domain.services;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.esupportail.example.dao.repositories.UserRepository;
@@ -40,8 +42,18 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public User getUser(final String id) {
+		return repository.findOne(id);
+	}
+
+	@Override
 	public Page<User> getAdminUsers(final int page, final int size, final Sort sort) {
 		return repository.findByAdminTrue(new PageRequest(page, size, sort));
+	}
+
+	@Override
+	public List<User> getAllUsers(final Sort sort) {
+		return repository.findAll(sort);
 	}
 
 	@Override

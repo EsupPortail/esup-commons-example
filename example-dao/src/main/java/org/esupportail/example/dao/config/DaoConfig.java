@@ -26,7 +26,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @Lazy
 @EnableTransactionManagement
-@EnableJpaRepositories("org.esupportail.cookingapp.dao.repositories")
+@EnableJpaRepositories("org.esupportail.example.dao.repositories")
 @Import({ JdbcDataSourceConfig.class, JndiDataSourceConfig.class })
 public class DaoConfig {
 

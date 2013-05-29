@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    template="/stylesheets/template.xhtml">
+    <ui:define name="content">
+        <h:form id="usersForm">
+            <div class="panel">
+                <div class="panel-heading">
+                    Utilisateurs
+                    <p:outputPanel id="actions" layout="block" styleClass="pull-right">
+                        <ul class="inline">
+                            <li>
+                                <p:commandLink action="#{userController.goAdd}" styleClass="btn btn-small btn-success" title="Ajouter un utilisateur" rel="tooltip">
+                                    <i class="icon-plus"/>
+                                </p:commandLink>
+                            </li>
+                            <ui:fragment rendered="#{not empty userController.usersLDM}">
+                                <li>
+                                    <p:commandLink
+                                        action="#{userController.deleteUsers}"
+                                        styleClass="btn btn-small btn-danger"
+                                        title="Supprimer les utilisateurs sélectionnés"
+                                        rel="tooltip">
+                                        <i class="icon-trash" />
+                                    </p:commandLink>
+                                </li>
+                            </ui:fragment>
+                        </ul>
+                    </p:outputPanel>
+                </div>
+                <p:dataTable id="usersList"
+                    value="#{userController.usersLDM}" rows="10"
+                    rowsPerPageTemplate="1,2,3,4,5,6,7,8,9,10"
+                    var="user" paginator="true" lazy="true"
+                    editable="true" sortBy="#{user.displayName}"
+                    selection="#{userController.selectedUsers}">
+
+                    <p:ajax event="rowEdit"
+                        listener="#{userController.onEdit}" />
+
+                    <p:column selectionMode="multiple"
+                        style="width:18px!important; text-align:center;" />
+                    <p:column headerText="ID" sortBy="#{user.id}">
+                        <h:outputText title="#{user.id}"
+                            value="#{user.id}" />
+                    </p:column>
+                    <p:column headerText="Nom"
+                        sortBy="#{user.displayName}">
+                        <h:outputText title="#{user.displayName}"
+                            value="#{user.displayName}" />
+                    </p:column>
+                    <p:column headerText="Langue"
+                        sortBy="#{user.language}">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText title="#{user.language}"
+                                    value="#{user.language}" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:selectOneMenu
+                                    value="#{user.language}"
+                                    required="true">
+                                    <f:selectItem itemValue="fr"
+                                        itemLabel="Français" />
+                                    <f:selectItem itemValue="en"
+                                        itemLabel="Anglais" />
+                                </h:selectOneMenu>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="Email" sortBy="#{user.email}">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText title="#{user.email}"
+                                    value="#{user.email}" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{user.email}"
+                                    required="true" maxlength="80" />
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="Admin?" sortBy="#{user.admin}"
+                        style="width:18px!important; text-align:center;">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <p:outputPanel styleClass="icon-check"
+                                    rendered="#{user.admin}" />
+                                <p:outputPanel
+                                    styleClass="icon-check-empty"
+                                    rendered="#{not user.admin}" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:selectBooleanCheckbox
+                                    value="#{user.admin}"
+                                    style="padding-top: 5px;" />
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column
+                        style="width:18px!important; text-align:center;">
+                        <p:rowEditor />
+                    </p:column>
+                </p:dataTable>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
+

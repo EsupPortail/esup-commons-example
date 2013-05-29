@@ -3,5 +3,4 @@
 .classpath
 .project
 target/
-**/exampleDatabase.*
-**/exampleData.*
+example-web-jsf-servlet/example.*

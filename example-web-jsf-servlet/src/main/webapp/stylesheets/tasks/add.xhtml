@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    template="/stylesheets/template.xhtml">
+    <ui:define name="content">
+        <h:form styleClass="form-horizontal">
+            <div class="panel">
+                <div class="panel-heading">
+                    Ajouter une tâche
+                    <ul class="inline pull-right">
+                        <li>
+                            <p:commandLink action="#{taskController.addTask}" styleClass="btn btn-small btn-success" title="Valider" rel="tooltip">
+                                <i class="icon-ok"/>
+                            </p:commandLink>
+                        </li>
+                        <li>
+                            <p:commandLink action="#{taskController.goList}" immediate="true" styleClass="btn btn-small" title="Annuler" rel="tooltip">
+                                <i class="icon-remove"/>
+                            </p:commandLink>
+                        </li>
+                    </ul>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="span12">
+                            <div class="control-group">
+                                <p:outputLabel value="Titre" for="inputTitle" styleClass="control-label"/>
+                                <div class="controls">
+                                    <p:inputText id="inputTitle" value="#{taskController.newTask.title}" required="true" maxlength="45" />
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <p:outputLabel value="Description" for="inputDescription" styleClass="control-label"/>
+                                <div class="controls">
+                                    <p:inputText id="inputDescription" value="#{taskController.newTask.description}" required="true" maxlength="45" />
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <p:outputLabel value="Date" for="inputDate" styleClass="control-label"/>
+                                <div class="controls">
+                                    <p:calendar id="inputDate" value="#{taskController.newTask.date}" pattern="dd/MM/yyyy" required="true" />
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <p:outputLabel value="Publique?" for="inputPublic" styleClass="control-label"/>
+                                <div class="controls">
+                                    <p:selectBooleanCheckbox id="inputPublic" value="#{taskController.newTask.publicTask}" style="padding-top: 5px;" />
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <p:outputLabel value="Assignée à" for="inputAssignee" styleClass="control-label"/>
+                                <div class="controls">
+                                    <p:selectOneMenu id="inputAssignee" value="#{taskController.newTask.assignee}" converter="#{userConverter}">
+                                        <f:selectItem itemValue="" itemLabel="" />
+                                        <f:selectItems value="#{taskController.users}" var="u" itemValue="#{u}" itemLabel="#{u.displayName} (#{u.id})" />
+                                    </p:selectOneMenu>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
+
